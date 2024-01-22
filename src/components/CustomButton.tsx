@@ -4,10 +4,10 @@ import { CustomButtonProps } from "../types/types";
 
 class CustomButton extends React.Component<CustomButtonProps> {
   render(): React.ReactNode {
-    const { onPress, title, pressableStyle, textStyle } = this.props;
+    const { onPress, title, pressableStyle, textStyle, disabled } = this.props;
 
     return (
-      <Pressable onPress={onPress} style={pressableStyle}>
+      <Pressable onPress={onPress} style={pressableStyle} disabled={disabled}>
         <Text style={textStyle}>{title}</Text>
       </Pressable>
     );

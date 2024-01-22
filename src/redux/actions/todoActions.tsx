@@ -12,6 +12,7 @@ import {
   UPDATE_COMPLETED_TODO_FAILURE,
   UPDATE_TODO_FIELD_SUCCESS,
   UPDATE_TODO_FIELD_FAILURE,
+  CLEAR_FORM,
 } from "./actionTypes/todoActionTypes";
 
 export const todoActions = {
@@ -82,4 +83,6 @@ export const todoActions = {
     error: unknown;
     message: { key: string; message: string };
   }) => ({ type: UPDATE_TODO_FIELD_FAILURE, payload } as const),
+
+  clearForm: () => ({ type: CLEAR_FORM } as const),
 };

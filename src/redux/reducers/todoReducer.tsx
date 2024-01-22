@@ -2,6 +2,7 @@ import { TTodoActions, TTodoRootState } from "../../types/types";
 import {
   ADD_TODO_FAILURE,
   ADD_TODO_SUCCESS,
+  CLEAR_FORM,
   GET_ALL_TODOS_FAILURE,
   GET_ALL_TODOS_SUCCESS,
   GET_TODO_BY_ID_SUCCESS,
@@ -112,6 +113,18 @@ const todoReducer = (state = initialState, action: TTodoActions) => {
           ),
         loading: false,
         message: action.payload.message,
+      };
+    case CLEAR_FORM:
+      return {
+        ...state,
+        todo: {
+          id: "",
+          title: "",
+          description: "",
+          deadline: new Date(),
+          priority: "",
+          completed: false,
+        },
       };
 
     default:

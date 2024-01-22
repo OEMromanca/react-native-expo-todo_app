@@ -203,3 +203,9 @@ export const updateTodoField = (field: string, value: string) => {
     }
   };
 };
+
+export const clearSubmitform = () => {
+  return (dispatch: AppDispatch) => {
+    dispatch(todoActions.clearForm());
+  };
+};

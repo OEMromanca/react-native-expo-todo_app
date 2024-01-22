@@ -5,6 +5,7 @@ import CustomButton from "./CustomButton";
 import { connect } from "react-redux";
 import {
   addTodo,
+  clearSubmitform,
   updateTodoField,
 } from "../redux/actions/actionsOperations/todoActionsOperations";
 import {
@@ -23,6 +24,7 @@ import { updateSnackBar } from "../redux/actions/actionsOperations/snackBarActio
 class AddTodo extends React.Component<TAddTodoProps, TAddTodoState> {
   state = {
     isToggled: false,
+    disabled: true,
   };
 
   toggleForm = () => {
@@ -39,23 +41,32 @@ class AddTodo extends React.Component<TAddTodoProps, TAddTodoState> {
     if (value !== formattedDate) {
       updateTodoField(field, value);
     }
+    if (value) {
+      this.setState({ disabled: false });
+    }
   };
 
   onSubmit = () => {
-    const { addTodo, updateSnackBar } = this.props;
-    const newTodo = {
-      title: this.props.todo.title,
-      description: this.props.todo.description,
-      deadline: this.props.todo.deadline,
-      priority: this.props.todo.priority,
-      completed: this.props.todo.completed,
-    };
+    const { addTodo, updateSnackBar, todo, clearSubmitForm } = this.props;
 
-    if (newTodo) {
+    console.log(todo, "TODO");
+
+    const newTodo = {
+      title: todo.title,
+      description: todo.description,
+      deadline: todo.deadline,
+      priority: todo.priority,
+      completed: todo.completed,
+    };
+    const valuesCheck = newTodo.title && newTodo.description !== "";
+
+    if (newTodo && valuesCheck) {
       try {
         addTodo(newTodo);
         this.setState((prev) => ({ ...prev, isToggled: !prev.isToggled }));
         updateSnackBar("add");
+        clearSubmitForm();
+        console.log(todo, "TODO");
       } catch (error) {
         console.error("Failed to add todo:", error);
       }
@@ -65,6 +76,7 @@ class AddTodo extends React.Component<TAddTodoProps, TAddTodoState> {
   render(): React.ReactNode {
     const { isToggled } = this.state;
     const { todo } = this.props;
+
     return (
       <View>
         {!isToggled ? (
@@ -116,6 +128,7 @@ class AddTodo extends React.Component<TAddTodoProps, TAddTodoState> {
                 title="Add todo"
                 pressableStyle={styles.submitButtonAddTodo}
                 textStyle={styles.submitButtonAddTodoTextStyle}
+                disabled={this.state.disabled}
               />
               <CustomButton
                 onPress={this.toggleForm}
@@ -233,6 +246,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch(updateSnackBar(snackBarContentKey)),
     updateTodoField: (field: string, value: string) =>
       dispatch(updateTodoField(field, value)),
+    clearSubmitForm: () => dispatch(clearSubmitform()),
   };
 };
 

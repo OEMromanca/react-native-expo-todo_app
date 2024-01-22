@@ -88,10 +88,12 @@ export type TAddTodoProps = {
   updateTodoField: (field: string, value: string) => void;
   todo: Omit<ITodo, "id">;
   updateSnackBar: (snackBarContentKey: TSnackbarKey) => void;
+  clearSubmitForm: () => void;
 };
 
 export type TAddTodoState = {
   isToggled?: boolean;
+  disabled: boolean;
 };
 
 //KEYS
@@ -125,6 +127,7 @@ export type CustomButtonProps = {
   title: string;
   pressableStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  disabled?: boolean;
 };
 
 export type TDeleteTodoModalContentProps = {
