@@ -126,7 +126,10 @@ class AddTodo extends React.Component<TAddTodoProps, TAddTodoState> {
               <CustomButton
                 onPress={this.onSubmit}
                 title="Add todo"
-                pressableStyle={styles.submitButtonAddTodo}
+                pressableStyle={[
+                  styles.submitButtonAddTodo,
+                  this.state.disabled && { opacity: 0.33 },
+                ]}
                 textStyle={styles.submitButtonAddTodoTextStyle}
                 disabled={this.state.disabled}
               />
